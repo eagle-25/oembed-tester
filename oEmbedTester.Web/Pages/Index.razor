@@ -1,0 +1,83 @@
+﻿@page "/"
+@using oEmbedTester.Domain.OEmbed
+@using Newtonsoft.Json
+
+<style>
+   .row {
+      padding: 20px;
+   }
+   .form-group {
+      padding-bottom: 20px;
+   }
+</style>
+
+<PageTitle>Index</PageTitle>
+
+<h1>Test your own oEmbed link!</h1>
+Welcome to oEmbed tester page.
+This page allows you to test oEmbed link and show its properties. <br/>
+If you have any questions or issues, pleas contact me via seungjun.park025@gmail.com
+
+<h3> Test your link</h3>
+You can test your oEmbed link on the inputbox below. <br/>
+Once you click the Test button, you can find your oEmbed properties.
+
+<div class="input-group mb-3">
+   @InputOEmbedUrl
+   <input type="text" @bind="@InputOEmbedUrl" class="form-control" placeholder="oEmbed url" aria-label="input your url!" aria-describedby="basic-addon1">
+   <div class="input-group-append">
+      <button class="btn btn-primary" @onclick="OnPerformTestButtonClicked">Test!</button>
+   </div>
+</div>
+
+<table class="table">
+   <thead>
+   <tr>
+      <th>Property Name</th>
+      <th>Property Value</th>
+   </tr>
+   </thead>
+   <tbody>
+   @if (_oEmbed != null)
+   {
+      @foreach (var property in typeof(OEmbed).GetProperties())
+      {
+         <tr>
+            <td>@property.Name</td>
+            <td>@property.GetValue(_oEmbed, null)</td>
+         </tr>
+      }   
+   }              
+   </tbody>
+</table>
+
+<h3>References</h3>
+<ul>
+   <li>
+      <a href="https://oembed.com">oEmbed offical spec documentation</a>
+   </li>
+</ul>
+
+@code {
+   private string? InputOEmbedUrl { get; set; }
+   private OEmbed? _oEmbed;
+
+   [Inject]
+   private IHttpClientFactory HttpClientFactory { get; set; }
+   
+   private async Task OnPerformTestButtonClicked()
+   {
+      var endpoint = "http://localhost:5030/OEmbedTester";
+      var requestUrl = $"{endpoint}?url={InputOEmbedUrl}";
+
+      var httpResponse = HttpClientFactory
+         .CreateClient()
+         .GetStringAsync(requestUrl)
+         .Result;
+
+      _oEmbed = JsonConvert
+         .DeserializeObject<OEmbed>(httpResponse);
+
+      StateHasChanged();
+   }
+}
