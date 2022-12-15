@@ -1,3 +1,4 @@
+using MediatR;
 using oEmbedTester.BackgroundServices;
 using oEmbedTester.Domain.oEmbedProvider;
 using Serilog;
@@ -11,6 +12,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddHttpClient();
 builder.Services.AddSingleton<OEmbedProviderWrapper>();
 builder.Services.AddHostedService<OEmbedProviderFetcher>();
+builder.Services.AddMediatR(typeof(Program));
 builder.Host.UseSerilog((ctx, lc) => lc
     .WriteTo.Console());
 

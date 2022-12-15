@@ -8,6 +8,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="mediatR" Version="11.1.0" />
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.0" />
         <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
         <PackageReference Include="Serilog.AspNetCore" Version="6.1.0" />
@@ -15,7 +16,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\oEmbedTester.Domain\oEmbedTester.Domain.csproj" />
       <ProjectReference Include="..\oEmbedTester.Domain\oEmbedTester.Domain.csproj" />
     </ItemGroup>
 
