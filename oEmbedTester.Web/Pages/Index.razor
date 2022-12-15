@@ -2,6 +2,8 @@
 @using oEmbedTester.Domain.OEmbed
 @using Newtonsoft.Json
 
+@inject IJSRuntime JS
+
 <style>
    .row {
       padding: 20px;
@@ -17,19 +19,21 @@
 Welcome to oEmbed tester page.
 This page allows you to test oEmbed link and show its properties. <br/>
 If you have any questions or issues, pleas contact me via seungjun.park025@gmail.com
-
+<br/>
+<br/>
+<br/>
 <h2> Test your link</h2>
 You can test your oEmbed link on the inputbox below. <br/>
 Once you click the Test button, you can find your oEmbed properties.
-
-<div class="input-group mb-3">
-   @InputOEmbedUrl
+<br/>
+<br/>
+<div class="input-group">
    <input type="text" @bind="@InputOEmbedUrl" class="form-control" placeholder="oEmbed url" aria-label="input your url!" aria-describedby="basic-addon1">
    <div class="input-group-append">
       <button class="btn btn-primary" @onclick="OnPerformTestButtonClicked">Test!</button>
    </div>
 </div>
-
+<br/>
 <table class="table">
    <thead>
    <tr>
@@ -42,15 +46,35 @@ Once you click the Test button, you can find your oEmbed properties.
    {
       @foreach (var property in typeof(OEmbedApiResponse).GetProperties())
       {
-         <tr id="@property.Name">
+         <tr>
             <td>@property.Name</td>
-            <td>@property.GetValue(_oEmbed, null)</td>
+            <td id="td_prop_value_@property.Name">
+               <div>
+                  @property.GetValue(_oEmbed, null)
+               </div>
+               
+               @if (@property.Name == "ThumbnailUrl" && _oEmbed.ThumbnailUrl != null)
+               {
+                  <div>
+                     <img src="@_oEmbed.ThumbnailUrl" width="@_oEmbed.ThumbnailWidth" height="@_oEmbed.ThumbnailHeight"/>
+                  </div>
+               }
+               
+               @if (@property.Name == "HTML" && _oEmbed.HTML != null)
+               {
+                  <div>
+                     @((MarkupString)_oEmbed.HTML)
+                  </div>
+               }
+            </td>
          </tr>
-      }   
+      }
+
    }              
    </tbody>
 </table>
-
+<br/>
+<br/>
 <h3>References</h3>
 <ul>
    <li>
