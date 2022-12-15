@@ -20,7 +20,7 @@ public class OEmbedTesterController
   }
   
   [HttpGet(Name = "GetOEmbed")]
-  public async Task<OEmbed> GetOEmbed(string url)
+  public async Task<OEmbedProviderResponse> GetOEmbed(string url)
   {
     return await _mediator
       .Send(new GetOEmbedFromProviderQuery()

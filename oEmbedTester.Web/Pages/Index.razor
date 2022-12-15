@@ -18,7 +18,7 @@ Welcome to oEmbed tester page.
 This page allows you to test oEmbed link and show its properties. <br/>
 If you have any questions or issues, pleas contact me via seungjun.park025@gmail.com
 
-<h3> Test your link</h3>
+<h2> Test your link</h2>
 You can test your oEmbed link on the inputbox below. <br/>
 Once you click the Test button, you can find your oEmbed properties.
 
@@ -40,9 +40,9 @@ Once you click the Test button, you can find your oEmbed properties.
    <tbody>
    @if (_oEmbed != null)
    {
-      @foreach (var property in typeof(OEmbed).GetProperties())
+      @foreach (var property in typeof(OEmbedApiResponse).GetProperties())
       {
-         <tr>
+         <tr id="@property.Name">
             <td>@property.Name</td>
             <td>@property.GetValue(_oEmbed, null)</td>
          </tr>
@@ -60,7 +60,7 @@ Once you click the Test button, you can find your oEmbed properties.
 
 @code {
    private string? InputOEmbedUrl { get; set; }
-   private OEmbed? _oEmbed;
+   private OEmbedApiResponse? _oEmbed;
 
    [Inject]
    private IHttpClientFactory HttpClientFactory { get; set; }
@@ -70,13 +70,12 @@ Once you click the Test button, you can find your oEmbed properties.
       var endpoint = "http://localhost:5030/OEmbedTester";
       var requestUrl = $"{endpoint}?url={InputOEmbedUrl}";
 
-      var httpResponse = HttpClientFactory
+      var httpResponse = await HttpClientFactory
          .CreateClient()
-         .GetStringAsync(requestUrl)
-         .Result;
+         .GetStringAsync(requestUrl);
 
       _oEmbed = JsonConvert
-         .DeserializeObject<OEmbed>(httpResponse);
+         .DeserializeObject<OEmbedApiResponse>(httpResponse);
 
       StateHasChanged();
    }

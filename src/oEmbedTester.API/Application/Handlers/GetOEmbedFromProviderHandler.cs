@@ -5,7 +5,7 @@ using oEmbedTester.Domain.OEmbed;
 
 namespace oEmbedTester.Application.Handlers;
 
-public class GetOEmbedFromProviderHandler:  IRequestHandler<GetOEmbedFromProviderQuery, OEmbed>
+public class GetOEmbedFromProviderHandler:  IRequestHandler<GetOEmbedFromProviderQuery, OEmbedProviderResponse>
 {
     private readonly IMediator _mediator;
     private readonly IHttpClientFactory _httpClientFactory;
@@ -16,7 +16,7 @@ public class GetOEmbedFromProviderHandler:  IRequestHandler<GetOEmbedFromProvide
         _httpClientFactory = httpClientFactory;
     }
 
-    public async Task<OEmbed> Handle(GetOEmbedFromProviderQuery request, CancellationToken cancellationToken)
+    public async Task<OEmbedProviderResponse> Handle(GetOEmbedFromProviderQuery request, CancellationToken cancellationToken)
     {
         var provider = await _mediator
             .Send(new ResolveProviderQuery()
@@ -39,6 +39,6 @@ public class GetOEmbedFromProviderHandler:  IRequestHandler<GetOEmbedFromProvide
             .GetStringAsync(oEmbedRequestingUrl, cancellationToken);
 
         return JsonConvert
-            .DeserializeObject<OEmbed>(httpResponse) ?? throw new InvalidOperationException("Provider로부터 OEmbed 데이터를 받아오지 못 했습니다.");
+            .DeserializeObject<OEmbedProviderResponse>(httpResponse) ?? throw new InvalidOperationException("Provider로부터 OEmbed 데이터를 받아오지 못 했습니다.");
     }
 }

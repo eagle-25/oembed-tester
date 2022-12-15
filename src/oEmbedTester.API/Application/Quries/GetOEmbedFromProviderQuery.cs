@@ -4,7 +4,7 @@ using oEmbedTester.Domain.oEmbedProvider;
 
 namespace oEmbedTester.Application.Quries;
 
-public class GetOEmbedFromProviderQuery : IRequest<OEmbed>
+public class GetOEmbedFromProviderQuery : IRequest<OEmbedProviderResponse>
 {
     public string requestedUrl { get; set; }
 }
