@@ -4,7 +4,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "oEmbedTester.API", "src\oEm
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "oEmbedTester.Domain", "src\oEmbedTester.Domain\oEmbedTester.Domain.csproj", "{8D545296-3C8C-4735-8555-CD853BDBA9AB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "oEmbedTester.Web", "oEmbedTester.Web\oEmbedTester.Web.csproj", "{FB23C55A-337E-4B2C-8B0C-79066A7B5665}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "oEmbedTester.Test", "src\oEmbedTester.Test\oEmbedTester.Test.csproj", "{D6C85C2F-EEA4-49B3-987A-DF24173E1E2B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "oEmbedTester.Web", "src\oEmbedTester.Web\oEmbedTester.Web.csproj", "{D7ACFEAF-5B46-41AF-820F-43F652A18DDE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -20,9 +22,13 @@ Global
 		{8D545296-3C8C-4735-8555-CD853BDBA9AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8D545296-3C8C-4735-8555-CD853BDBA9AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8D545296-3C8C-4735-8555-CD853BDBA9AB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FB23C55A-337E-4B2C-8B0C-79066A7B5665}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FB23C55A-337E-4B2C-8B0C-79066A7B5665}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FB23C55A-337E-4B2C-8B0C-79066A7B5665}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FB23C55A-337E-4B2C-8B0C-79066A7B5665}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D6C85C2F-EEA4-49B3-987A-DF24173E1E2B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D6C85C2F-EEA4-49B3-987A-DF24173E1E2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D6C85C2F-EEA4-49B3-987A-DF24173E1E2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D6C85C2F-EEA4-49B3-987A-DF24173E1E2B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D7ACFEAF-5B46-41AF-820F-43F652A18DDE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D7ACFEAF-5B46-41AF-820F-43F652A18DDE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D7ACFEAF-5B46-41AF-820F-43F652A18DDE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D7ACFEAF-5B46-41AF-820F-43F652A18DDE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

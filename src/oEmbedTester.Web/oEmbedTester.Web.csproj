@@ -11,7 +11,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\src\oEmbedTester.Domain\oEmbedTester.Domain.csproj" />
+      <ProjectReference Include="..\oEmbedTester.Domain\oEmbedTester.Domain.csproj" />
     </ItemGroup>
 
 </Project>
