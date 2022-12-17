@@ -1,6 +1,9 @@
+using System.Net;
 using MediatR;
 using Newtonsoft.Json;
 using oEmbedTester.Application.Quries;
+using oEmbedTester.Data;
+using oEmbedTester.Domain.Exceptions;
 using oEmbedTester.Domain.OEmbed;
 
 namespace oEmbedTester.Application.Handlers;
@@ -18,27 +21,38 @@ public class GetOEmbedFromProviderHandler:  IRequestHandler<GetOEmbedFromProvide
 
     public async Task<OEmbedProviderResponse> Handle(GetOEmbedFromProviderQuery request, CancellationToken cancellationToken)
     {
+        #region Resolve Provider
         var provider = await _mediator
             .Send(new ResolveProviderQuery()
             {
                 RequestedUrl = request.requestedUrl
             }, cancellationToken);
 
-        using var httpClient = _httpClientFactory
-            .CreateClient();
+        if (provider is null)
+            throw new ProviderNotFoundException();
 
-        var providerUrl = provider
-            .Endpoints
+        var providerUrl = (provider
+                .Endpoints ?? throw new InvalidOperationException())
             .First()
-            .Url
-            .Replace("{format}","json");
+            .Url;
 
         var oEmbedRequestingUrl = $"{providerUrl}?url={request.requestedUrl}";
+        #endregion
+        #region Get oEmbedResponse from provider
+        var httpResponse = await _httpClientFactory
+            .CreateClient()
+            .GetAsync(oEmbedRequestingUrl, cancellationToken);
 
-        var httpResponse = await httpClient
-            .GetStringAsync(oEmbedRequestingUrl, cancellationToken);
+        if (httpResponse.StatusCode == HttpStatusCode.BadRequest)
+            throw new ContentNotFoundException();
 
+        var responseBody = await httpResponse
+            .Content
+            .ReadAsStringAsync(cancellationToken);
+        #endregion
+        
         return JsonConvert
-            .DeserializeObject<OEmbedProviderResponse>(httpResponse) ?? throw new InvalidOperationException("Provider로부터 OEmbed 데이터를 받아오지 못 했습니다.");
+            .DeserializeObject<OEmbedProviderResponse>(responseBody) ?? throw new InvalidOperationException("Provider로부터 OEmbed 데이터를 받아오지 못 했습니다.");
+ 
     }
 }

@@ -1,8 +1,11 @@
+using System.Net;
 using MediatR;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using oEmbedTester.Application.Quries;
+using oEmbedTester.Data;
 using oEmbedTester.Domain.OEmbed;
-using oEmbedTester.Domain.oEmbedProvider;
+using oEmbedTester.Filters;
 
 namespace oEmbedTester.Controllers;
 
@@ -19,6 +22,8 @@ public class OEmbedTesterController
     _mediator = mediator;
   }
   
+  [ProviderNotFoundExceptionFilter]
+  [ContentNotFoundExceptionFilter]
   [HttpGet(Name = "GetOEmbed")]
   public async Task<OEmbedProviderResponse> GetOEmbed(string url)
   {
