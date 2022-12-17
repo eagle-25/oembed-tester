@@ -1,6 +1,7 @@
 ﻿@page "/"
 @using oEmbedTester.Domain.OEmbed
 @using Newtonsoft.Json
+@using oEmbedTester.Web.Data
 
 @inject IJSRuntime JS
 
@@ -93,7 +94,7 @@ Once you click the Test button, you can find your oEmbed properties.
    {
       var endpoint = "http://localhost:5030/OEmbedTester";
       var requestUrl = $"{endpoint}?url={InputOEmbedUrl}";
-
+      
       var httpResponse = await HttpClientFactory
          .CreateClient()
          .GetStringAsync(requestUrl);
