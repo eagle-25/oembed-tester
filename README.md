@@ -5,7 +5,7 @@ oEmbed tester 프로젝트에 오신것을 환영합니다.
 이 프로젝트는 oEmbed의 프로퍼티들을 확인할 수 있는 서비스의 구성인 Web App'과 API를 포함하고 있습니다.
 
 
-# oEmbed 테스트하기
+# oEmbed Tester 사용해보기
 
 이 항목에서는 oEmbed 테스트하는 방법에 대해 설명합니다.
 
@@ -53,6 +53,93 @@ meta 제품의 oembed api를 사용하기 위해서는 application 검수가 필
 자세한 내용은 [여기](https://oembed.com/#section2.3)를 참조해 주세요.
 
 
+# Oembed Tester API 사용해보기.
+
+이 프로젝트는 `src/oEmbedTester.API`에 위치한 API와 연동되어 있습니다.
+
+API를 테스트하기 위해 먼저 [프로젝트를 실행](#프로젝트를-실행하는-방법)을 진행해야 합니다.
+
+API 프로젝트가 잘 실행되었다면 `oEmbedTester.API`가 http://localhost:5030 엔드포인트에서 listening하고 있음을 확인할 수 있습니다.
+
+### 참고사항
+
+이 프로젝트는 oEmbed Properties를 얻기 위해 `http://localhost:5030/OEmbedTester`에 위치한 api를 사용하고 있습니다. 
+
+oEmbed Property를 얻는 API인 `OEmbedTester`를 테스트하기 위해서는  [OEmbedTester API 정의](#/OEmbedTester) - Example을 참조해주세요.
+
+# API 정의
+
+이 항목에서는 API를 정의합니다.
+
+## /OEmbedTester 
+
+`OEmbedTester`의 정의는 다음과 같습니다.
+
+### Endpoint
+```
+/OEmbedTester
+```
+
+### Parameters
+|Name|Type|Required|Description|
+|-|-|-|-|
+|url|string|Y|테스트할 oEmbed link를 지정하는 파라메터 입니다.|
+
+### Response Scheme
+```
+{
+  "type": "string",
+  "version": "string",
+  "title": "string",
+  "authorName": "string",
+  "authorUrl": "string",
+  "providerName": "string",
+  "providerUrl": "string",
+  "cacheAge": 0,
+  "thumbnailUrl": "string",
+  "thumbnailWidth": 0,
+  "thumbnailHeight": 0,
+  "url": "string",
+  "width": 0,
+  "height": 0,
+  "html": "string"
+}
+```
+
+### Example
+
+**request url**
+```
+http://localhost:5030/OEmbedTester?url=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3D7EpFQISqTyM
+```
+
+**cli**
+```shell
+curl -X 'GET' \
+  'http://localhost:5030/OEmbedTester?url=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3D7EpFQISqTyM' \
+  -H 'accept: application/json'
+```
+
+**Response**
+```
+{
+  "type": "video",
+  "version": "1.0",
+  "title": "마침내 월드컵 우승까지…메시, 다 이루었다",
+  "authorName": "채널A 뉴스",
+  "authorUrl": "https://www.youtube.com/@channelA-news",
+  "providerName": "YouTube",
+  "providerUrl": "https://www.youtube.com/",
+  "cacheAge": null,
+  "thumbnailUrl": "https://i.ytimg.com/vi/7EpFQISqTyM/hqdefault.jpg",
+  "thumbnailWidth": 480,
+  "thumbnailHeight": 360,
+  "url": null,
+  "width": 200,
+  "height": 113,
+  "html": "<iframe width=\"200\" height=\"113\" src=\"https://www.youtube.com/embed/7EpFQISqTyM?feature=oembed\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen title=\"마침내 월드컵 우승까지…메시, 다 이루었다\"></iframe>"
+}
+```
 
 # 프로젝트 실행 및 종료
 
